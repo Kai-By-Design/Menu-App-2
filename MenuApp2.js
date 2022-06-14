@@ -157,7 +157,7 @@ menu.start();
 
 //------------------------------------------------------------------------------------------------------
 // FoodItem
-class Player {
+class Foods {
   constructor(name, allergens, price) {
     this.name = name;
     this.allergens = allergens;
@@ -169,7 +169,7 @@ class Player {
   }
 }
 
-class Team {
+class MenuSection {
   constructor(name) {
     this.name = name;
     this.foodItems = [];
@@ -190,8 +190,8 @@ class Team {
 
 class Menu {
   constructor() {
-    this.teams = [];
-    this.selectedTeam = null;
+    this.menuSections = [];
+    this.selectedMenuItems = null;
   }
 
   start() {
@@ -222,59 +222,64 @@ class Menu {
   showMainMenuOptions() {
     return prompt(`
     0) exit
-    1) Create new MENU SECTION
-    2) View VIEW MENU SECTION
+    1) Create NEW MENU SECTION
+    2) View MENU SECTION
     3) Delete MENU SECTION
-    4) Display FULL MENU
+    4) Display MENU SECTIONS
     `);
   }
 
-  showTeamMenuOptions(teamInfo) {
+  showMenuOptions(editFoodItems) {
     return prompt(`
     0) back
-    1) Add Food Item to Menu Section
-    2) delete Food Item from Menu Section
+    1) Add Food Item
+    2) delete Food Item
     ----------------------
-    ${teamInfo}
+    ${editFoodItems}
     `);
   }
+
 
   displayFullMenu() {
     let menuString = '';
-    for (let i = 0; i < this.teams.length; i++) {
-      menuString += i + ')' + this.teams[i].name +  this.teams[i].price + '\n';
+    for (let i = 0; i < this.menuSections.length; i++) {
+      menuString += i + ')' + this.menuSections[i].name + '\n';
     }
-    alert(menuString);
+    // console.log(this.editFoodItems, editFoodItems);
+
+
+    alert(`${menuString}`);
   }
 
   displayMenuSections() {
-    let teamString = '';
-    for (let i = 0; i < this.teams.length; i++) {
-      teamString += i + ')' + this.teams[i].name + '\n';
+    let menuString = '';
+    for (let i = 0; i < this.menuSections.length; i++) {
+      menuString += i + ')' + this.menuSections[i].name + '\n';
     }
-    let test = prompt(`${teamString}
-    Enter the index of the team you wish to view:`);
+
+    let test = prompt(`${menuString}
+    Enter the index of the Menu Section you wish to view:`);
     return test;
   }
 
   createMenuSections() {
     let name = prompt('Enter name for New Menu Section:');
-    this.teams.push(new Team(name));
+    this.menuSections.push(new MenuSection(name));
   }
 
   viewMenuSections() {
     // this.displayTeams();
     // let index = prompt(`${this.displayMenuSections()}`);
     let index = this.displayMenuSections();
-    if  (index > -1 && index < this.teams.length) {
-      this.selectedTeam = this.teams[index];
-      let description = 'Menu Section: ' + this.selectedTeam.name + '\n';
+    if  (index > -1 && index < this.menuSections.length) {
+      this.selectedMenuItems = this.menuSections[index];
+      let description = 'Menu Section: ' + this.selectedMenuItems + '\n';
 
-      for (let i = 0; i < this.selectedTeam.foodItems.length; i++) {
-        description += i + ') ' + this.selectedTeam.foodItems[i].name + ' - ' + this.selectedTeam.foodItems[i].allergens+ '  -  ' + this.selectedTeam.foodItems[i].price + '\n';
+      for (let i = 0; i < this.selectedMenuItems.foodItems.length; i++) {
+        description += i + ') ' + this.selectedMenuItems.foodItems[i].name + ' - ' + this.selectedMenuItems.foodItems[i].allergens+ '  -  ' + this.selectedMenuItems.foodItems[i].price + '\n';
       }
 
-      let selection = this.showTeamMenuOptions(description);
+      let selection = this.showMenuOptions(description);
       switch (selection) {
         case '1' :
           this.addFoodItem();
@@ -287,9 +292,10 @@ class Menu {
 
 
   deleteMenuSection() {
-    let index = prompt('Enter index of the team you wish to delete:');
-    if (index > -1 && index < this.teams.length) {
-      this.teams.splice(index, 1);
+    // let index = prompt('Enter index of the Menu Section you wish to delete:');
+    let index = this.displayMenuSections();
+    if (index > -1 && index < this.menuSections.length) {
+      this.menuSections.splice(index, 1);
     }
   }
 
@@ -297,13 +303,13 @@ class Menu {
     let name = prompt('Enter name for new Food Item');
     let allergens = prompt(`Enter ${name} Allergens:`);
     let price = prompt(`Enter ${name} Price:`);
-    this.selectedTeam.foodItems.push(new Player(name, allergens, price));
+    this.selectedMenuItems.foodItems.push(new Foods(name, allergens, price));
   }
 
   deleteFoodItem() {
     let index = prompt('Enter the index of the Food Item you wish to delete:');
-    if (index > -1 && index < this.selectedTeam.players.length) {
-      this.selectedTeam.players.splice(index, 1);
+    if (index > -1 && index < this.selectedMenuItems.players.length) {
+      this.selectedMenuItems.players.splice(index, 1);
     }
   }
 }
