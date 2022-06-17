@@ -15,11 +15,19 @@ class Menu {
     this.menuName = menuName;
     this.foodList = [];
   }
+
+  addFoodItem(currentMenu) {
+    this.menuGroup = currentMenu;
+    let name = prompt('Enter name for new Food Item');
+    let allergens = prompt(`Enter ${name} Allergens:`);
+    let price = prompt(`Enter ${name} Price:`);
+    this.foodList.push(new Foods(name, allergens, price));
+  }
   // console.log(menuName);
 
-  addFoodItems(input) {
-    this.foodList.push(input);
-  }
+  // addFoodItems(input) {
+  //   this.foodList.push(input);
+  // }
 }
 
 // function listMenus (){
@@ -32,6 +40,13 @@ class Begin {
   constructor (){
     this.menuGroup = [];
   }
+  // menuGroup = [ {menu}, {menu1}]
+  ////{menuName: name,
+///////foodList: [{food}, {food1}]}
+///////////////{name: name,
+///////////////{allergens: allergen,
+///////////////{price: price,
+// }
 
   //List Menu of Options as a Prompt
 
@@ -115,9 +130,14 @@ class Begin {
 
   displayFoodList(menuIndex){
     let currentMenu = this.menuGroup[menuIndex];
-    console.log('display foodlist : current Menu:  ', currentMenu);
+    console.log('line 125 display foodlist : current Menu:  ', Object.getOwnPropertyNames(currentMenu));
+    console.log('line 125 display foodlist : current Menu:  ', currentMenu.menuName);
+    console.log('line 125 display foodlist : foodlist:  ', currentMenu.foodList);
+    console.log('line 125 display foodlist : add food item:  ', this.addFoodItem(currentMenu).foodList.push(new Food ('cake', 'gluten', '$5.99')));
+    console.log('line 125 display foodlist : add food item:  ', currentMenu.foodList.push(new Food ('cake', 'gluten', '$5.99')));
     let fList = ''
-    if(currentMenu.foodList.length > 0) {
+    // if(this.menuGroup[menuIndex].foodList.length > 0) {
+      if (menu.foodList.length > 0){
       for (let j = 0; j < currentMenu.foodList.length; i++) {
         let currentFood = currentMenu.foodList[j];
         let fname = currentFood.name;
@@ -174,14 +194,13 @@ class Begin {
 
   }
 
-  addFoodItem(currentMenu) {
-
-    let name = prompt('Enter name for new Food Item');
-    let allergens = prompt(`Enter ${name} Allergens:`);
-    let price = prompt(`Enter ${name} Price:`);
-    currentMenu.foodList.push(new Foods(name, allergens, price));
-  }
-
+  // addFoodItem(currentMenu) {
+  //   let name = prompt('Enter name for new Food Item');
+  //   let allergens = prompt(`Enter ${name} Allergens:`);
+  //   let price = prompt(`Enter ${name} Price:`);
+  //   currentMenu.foodList.push(new Foods(name, allergens, price));
+  // }
+//////////////-----------------------------------------------------------------------------------
 
   // addFoods(input){
   //   input = prompt(`${this.displayMenuList()}
