@@ -92,14 +92,34 @@ class Menu {
   createRoster() {
     let name = prompt('Enter name for new Event Roster:')
     this.cateringEventRoster.push(new CateringEventRoster(name));
+
+  }
+
+  //Reusable code that displays the list of Events that have been created
+  //and displays them to allow users to more easily select their options.
+  rosterListDisplay(){
+    if(this.cateringEventRoster.length > 0) {
+      let output = '';
+      for (let i = 0; i < this.cateringEventRoster.length; i++){
+        output += `${i} )  ${this.cateringEventRoster[i].name}\n`;
+      }
+      console.log(output);
+      return output;
+    }
+    else {
+      return `No Events Created Yet\nPress Any Button to Go Back to the Main Menu`;
+    }
   }
 
   viewRoster() {
-    let index = prompt('Enter the index of the Event Roster you wish to view:');
+    //Created a localized placeholder variable to run the event name display helper method through
+    let listEvents = this.rosterListDisplay();
+    let index = prompt(`${listEvents} \n \n` + 'Enter the index of the Event Roster you wish to view:');
+    //let index = prompt(`${this.rosterListDisplay()} \n Enter the index of the Event Roster you wish to view:`);
     if (index > -1 && index < this.cateringEventRoster.length) {
       this.selectedRoster = this.cateringEventRoster[index];
       let description = 'Event Roster: ' + this.selectedRoster.name + '\n';
-      console.log('line 99:  ', description);
+      //console.log('line 99:  ', description);
 
       for (let i = 0; i < this.selectedRoster.workers.length; i++) {
         description += i + ') ' + this.selectedRoster.workers[i].name
@@ -118,7 +138,8 @@ class Menu {
   }
 
   deleteRoster(){
-    let index = prompt('Enter the index of Event Roster you wish to delete:');
+    let listEvents = this.rosterListDisplay();
+    let index = prompt(`${listEvents} \n \n` + 'Enter the index of Event Roster you wish to delete:');
     if (index > -1 && index < this.cateringEventRoster.length) {
       this.cateringEventRoster.splice(index, 1);
     }
